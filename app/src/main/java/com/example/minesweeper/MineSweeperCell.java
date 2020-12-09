@@ -9,8 +9,18 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class MineSweeperCell extends View {
+    int x = 0;
+    int y = 0;
+
     public MineSweeperCell(Context ctx) {
         super(ctx);
+        init();
+    }
+
+    public MineSweeperCell(Context ctx, int x, int y) {
+        super(ctx);
+        this.x = x;
+        this.y = y;
         init();
     }
 
@@ -42,5 +52,13 @@ public class MineSweeperCell extends View {
     public boolean performClick() {
         super.performClick();
         return true;
+    }
+
+    public int getPosx() {
+        return x;
+    }
+
+    public int getPosY() {
+        return y;
     }
 }
