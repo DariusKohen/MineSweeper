@@ -11,9 +11,11 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     MineSweeperCell[] cells;
+    int nbMines = 20;
     int nbCols;
     int nbRows;
 
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         nbCols = gl.getColumnCount();
         nbRows = gl.getRowCount();
         cells = new MineSweeperCell[nbCols * nbRows];
+        // Fill grid
         for(int i = 0; i < (nbCols * nbRows); i++) {
             cells[i] = new MineSweeperCell(this, i % 10, i / 10);
             cells[i].setOnClickListener(new View.OnClickListener() {
@@ -35,6 +38,17 @@ public class MainActivity extends AppCompatActivity {
             });
             gl.addView(cells[i]);
         }
+        // Dispatch mines
+        for(int i = 0; i < nbMines; i++) {
+            int rand = new Random().nextInt(nbCols * nbRows);
+            if (!cells[rand].getMine()) {
+                cells[rand].setMine();
+            } else {
+                --i;
+            }
+        }
+
+        // Size grid cells
         gl.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
