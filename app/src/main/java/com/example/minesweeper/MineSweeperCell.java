@@ -10,11 +10,16 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class MineSweeperCell extends View {
-    Paint txt;
-    boolean touchOn;
-    boolean mine;
-    int x = 0;
-    int y = 0;
+    public interface OnSelectedListener {
+        boolean OnSelected(MineSweeperCell msc, boolean mine);
+    }
+
+    private Paint txt;
+    private boolean touchOn;
+    private boolean mine;
+    private OnSelectedListener selectedListener;
+    private int x = 0;
+    private int y = 0;
 
     public MineSweeperCell(Context ctx) {
         super(ctx);
@@ -52,7 +57,7 @@ public class MineSweeperCell extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         if (touchOn) {
-            if (mine) {
+            if (mine && txt != null) {
                 canvas.drawColor(Color.RED);
                 canvas.drawText("M",
                     this.getLayoutParams().width / 2 - 35,
@@ -70,10 +75,24 @@ public class MineSweeperCell extends View {
 
     @Override
     public boolean performClick() {
+        if (selectedListener != null) {
+            if (selectedListener.OnSelected(this, mine)) {
+                return true;
+            }
+        }
         super.performClick();
         touchOn = !touchOn;
         invalidate();
         return true;
+    }
+
+    public void setOnSelectedListener(OnSelectedListener listener) {
+        selectedListener = listener;
+    }
+
+    public void resetCell() {
+        touchOn = false;
+        mine = false;
     }
 
     public int getPosx() {
