@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class MineSweeperCell extends View {
+    boolean touchOn;
     int x = 0;
     int y = 0;
 
@@ -35,6 +36,7 @@ public class MineSweeperCell extends View {
     }
 
     private void init() {
+        touchOn = false;
     }
 
     @Override
@@ -45,12 +47,18 @@ public class MineSweeperCell extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        canvas.drawColor(Color.BLACK);
+        if (touchOn) {
+            canvas.drawColor(Color.LTGRAY);
+        } else {
+            canvas.drawColor(Color.BLACK);
+        }
     }
 
     @Override
     public boolean performClick() {
         super.performClick();
+        touchOn = !touchOn;
+        invalidate();
         return true;
     }
 
@@ -61,4 +69,5 @@ public class MineSweeperCell extends View {
     public int getPosY() {
         return y;
     }
+
 }
