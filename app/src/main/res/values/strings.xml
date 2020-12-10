@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">MineSweeper</string>
+    <string name="mines_txt">Mines : %1$d</string>
+    <string name="marks_txt">Marks : %1$d</string>
+    <string name="reset_btn">Reset</string>
+    <string name="mark_btn">Mark</string>
+    <string name="uncover_btn">Uncover</string>
+    <string name="lose_txt1">Game</string>
+    <string name="lose_txt2">Over</string>
+    <string name="win_txt1">You</string>
+    <string name="win_txt2">Win!</string>
 </resources>
